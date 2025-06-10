@@ -1,15 +1,9 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
 
 func main() {
-	fmt.Printf("Hello, World!")	
+	startRepl()
 }
 
-func cleanInput(text string) []string {
-	return strings.Fields(strings.ToLower(text))
-}
+
 
