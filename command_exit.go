@@ -5,8 +5,8 @@ import (
 	"os"
 )
 
-func commandExit(pagination *paginationConfig) error {
-	fmt.Print("Closing the Pokedex... Goodbye!\n")
+func commandExit(cfg *config) error {
+	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
 }

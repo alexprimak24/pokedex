@@ -2,14 +2,14 @@ package main
 
 import "fmt"
 
-func commandHelp(pagination *paginationConfig) error {
-	fmt.Print("Welcome to the Pokedex!\n")
-	fmt.Print("Usage:\n")
+func commandHelp(cfg *config) error {
 	fmt.Println()
-
-	for _, command := range commandsMap {
-		fmt.Println(command.name + ": " + command.description)
+	fmt.Println("Welcome to the Pokedex!")
+	fmt.Println("Usage:")
+	fmt.Println()
+	for _, cmd := range getCommands() {
+		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
 	}
-	println()
+	fmt.Println()
 	return nil
 }
