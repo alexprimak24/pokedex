@@ -11,6 +11,11 @@ func startRepl() {
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Println("Enter text (Ctrl + D to stop)")
 
+	pagination := paginationConfig{
+		Next: "https://pokeapi.co/api/v2/location-area/",
+		Previous: "",
+	} 
+
 	for {
 		fmt.Print("Pokedex > ")	
 
@@ -27,7 +32,7 @@ func startRepl() {
 
 		command, exists := commandsMap[words[0]]
 		if exists {
-			if err := command.callback(); err != nil {
+			if err := command.callback(&pagination); err != nil {
 				fmt.Println(err)
 			}
 			continue
@@ -42,10 +47,15 @@ func cleanInput(text string) []string {
 	return strings.Fields(strings.ToLower(text))
 }
 
+type paginationConfig struct {
+	Next string
+	Previous string
+}
+
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*paginationConfig) error
 }
 
 var commandsMap = make(map[string]cliCommand)
@@ -60,5 +70,15 @@ func init() {
 		name: "help",
 		description: "Displays a help message",
 		callback: commandHelp,
+	}
+	commandsMap["map"] = cliCommand{
+		name: "map",
+		description: "Displays the names of 20 location areas in the Pokemon world.",
+		callback: commandMap,
+	}
+	commandsMap["mapb"] = cliCommand{
+		name: "mapb",
+		description: "Displays the names of 20 previous location areas in the Pokemon world.",
+		callback: commandMapb,
 	}
 }
